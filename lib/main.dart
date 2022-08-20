@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:login_projects/provider/client_provider.dart';
 import 'package:login_projects/provider/user_provider.dart';
+import 'package:login_projects/services/navigatorkey.dart';
 import 'package:login_projects/views/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,7 @@ void main()async {
       ChangeNotifierProvider(create: (_) => ClientProvider()),
        ChangeNotifierProvider(create: (_) => UserProvider()),
     ],
-    child: MyApp(),
+    child: const MyApp(),
     ),
   );
 
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
+      navigatorKey: NavigationServices.key,
       theme: ThemeData(
         // This is the theme of your application.
         //
@@ -51,7 +53,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home:  LoginPage(),
+      home:  const LoginPage(),
     );
   }
 }

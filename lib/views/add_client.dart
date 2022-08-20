@@ -22,7 +22,7 @@ class _AddClientDataPageState extends State<AddClientDataPage> {
     final clientProvider=Provider.of<ClientProvider>(context,listen: false);
     final userProvider=Provider.of<UserProvider>(context,listen: false);
     if(userProvider.user!=null) {
-      await clientProvider.saveClient(userProvider.user!,_nameController.text,_companyController.text);
+      await clientProvider.saveClient(userProvider.user!.uid,_nameController.text,_companyController.text);
      // Navigator.pop(context);
     }
    // _nameController.clear();

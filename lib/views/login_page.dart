@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:login_projects/dialog/dialog.dart';
 import 'package:login_projects/provider/user_provider.dart';
+import 'package:login_projects/views/forget_password.dart';
 import 'package:login_projects/views/home_page.dart';
+import 'package:login_projects/views/signUp.dart';
 import 'package:provider/provider.dart';
+
+import '../palette/palette.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -11,17 +16,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  @override
   final _passwordController=TextEditingController();
   final _emailController=TextEditingController();
   final _key =GlobalKey<FormState>();
+  bool check=false;
+
+  @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       body: Form(
         key:_key ,
         child: Container(
-          color: Colors.white,
+          decoration: BoxDecoration(image: DecorationImage(image:AssetImage("assets/image2.jpg",),fit: BoxFit.fill )),
           child: Padding(
             padding: const EdgeInsets.only(left: 18.0,right: 18),
             child: SingleChildScrollView(
@@ -30,75 +37,67 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
 
                 children: [
-                  SizedBox(
-                    height: 80,
+                  const SizedBox(
+                    height: 110,
                   ),
-                  Container(
-                      height: 170,
-                      width: 170,
-                      child: Image.asset("assets/logo.jpg",fit: BoxFit.cover,),),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        "by jpg consulting Partners",
-                        style: TextStyle(fontWeight: FontWeight.w300,letterSpacing: 0.8),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 15,),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children:  [
                       Text(
                         "Welcome",
 
-                        style: TextStyle(fontSize: 28,fontWeight: FontWeight.bold,),
+                        style: TextStyle(fontSize: 39,fontWeight: FontWeight.bold,color:Colors.white),
                       ),
-                    ],
-                  ),
-                  SizedBox(height: 10,),
+                    ],),
+                  const SizedBox(height: 30,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children:  [
                       Text(
                         "sign in for continue",
-                        style: TextStyle(fontWeight: FontWeight.w300,letterSpacing: 0.8),
+                        style: TextStyle(fontWeight: FontWeight.w300,letterSpacing: 0.8,fontSize: 15,color:Colors.white),
                       ),
                     ],
                   ),
-                  SizedBox(height: 30,),
-
+                  const SizedBox(height: 60,),
                   TextFormField(
+                    textAlign: TextAlign.center,
                     controller: _emailController,
                     validator:  (value){
                       if(value!.isEmpty){
-                        return"Enter Email";
+                        return "Enter Email,";
                       }
                     },
                     decoration: InputDecoration(
                       focusedBorder:
                           OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
+                              borderSide: const BorderSide(
                                 width: 0.2,
+                                  color: Palette.color
                               )),
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                          borderSide: const BorderSide(
+                            width: 0.2,
+                              color: Palette.color
+                          )),
                       enabledBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(10),
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             width: 0.2,
-                            color: Colors.black
+                              color: Palette.color
                           )),
                       hintText: "Enter your email",
                       fillColor: Colors.white,
                       filled: true,
-                      prefixIcon: Icon(Icons.email,color: Colors.black38,)
+                      prefixIcon: const Icon(Icons.email,color: Palette.color,)
 
 
                     ),
                     keyboardType:TextInputType.emailAddress,
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 15,),
                   TextFormField(
+                    textAlign: TextAlign.center,
                     validator:  (value){
                       if(value!.isEmpty){
                         return"Enter Email";
@@ -111,26 +110,32 @@ class _LoginPageState extends State<LoginPage> {
                     decoration: InputDecoration(
                         focusedBorder:
                         OutlineInputBorder(borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                               width: 0.2,
+                                color: Palette.color
+                            )),
+                        border:  OutlineInputBorder(borderRadius: BorderRadius.circular(10),
+                            borderSide: const BorderSide(
+                              width: 0.2,color: Palette.color
+
                             )),
                         enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(10),
-                            borderSide: BorderSide(
+                            borderSide: const BorderSide(
                                 width: 0.2,
-                                color: Colors.black
+                                color: Palette.color
                             )),
                         hintText: "Password",
                         fillColor: Colors.white,
-                        suffixIcon: IconButton(onPressed: (){},icon: Icon(Icons.visibility_off),),
+                        suffixIcon: IconButton(onPressed: (){},icon: const Icon(Icons.visibility_off),),
                         filled: true,
-                        prefixIcon: Icon(Icons.lock,color: Colors.black38,)
+                        prefixIcon: const Icon(Icons.lock,color:Palette.color,)
 
 
                     ),
                     keyboardType:TextInputType.visiblePassword,
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 35,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -138,17 +143,37 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Padding(
                           padding: const EdgeInsets.only(left: 3.0),
-                          child: Container(height: 20,width: 20,decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),border: Border.all(color: Colors.black,width: 0.4)),),
+                          child: InkWell(
+                            onTap: (){
+                              setState((){
+                                if(check){
+                                  check=false;
+                                }
+                                else
+                                  {
+                                    check=true;
+                                  }
+                              });
+                            },
+                            child: Container(height: 20,width: 20,decoration: BoxDecoration(borderRadius: BorderRadius.circular(4),border: Border.all(color:Palette.color,width: 0.4)),
+                            child: FittedBox(child:  check?Icon(Icons.done,color:Colors.white,):SizedBox()),
+                            ),
+                          ),
                         ),
-                        SizedBox(width: 5,),
-                        Text("Remember me",style: TextStyle(fontWeight: FontWeight.w300,),),
+                        const SizedBox(width: 5,),
+                         Text("Remember me",style: TextStyle(fontWeight: FontWeight.w300,color:Colors.white),),
                       ],
                     ),
-                    Row(children: [
-                      Text("Forgot password?",style: TextStyle(color: Colors.blueAccent),),
+                    Row(children:  [
+                      InkWell(
+                          onTap: (){
+                           Navigator.push(context, MaterialPageRoute(builder: (_) => ForgetPasswordPage()));
+                          },
+                          child
+                          : Text("Forgot password?",style: TextStyle(color:Colors.white),)),
                     ],)
                   ],),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 40,),
                   Row(
                     children: [
                       Expanded(child:
@@ -158,66 +183,77 @@ class _LoginPageState extends State<LoginPage> {
                        await userProvider.singIn(_emailController.text, _passwordController.text);
 
                        if(userProvider.user!=null){
-                        Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));}
+                      //  Navigator.push(context, MaterialPageRoute(builder: (_) => const HomePage()));
+                        }
                        else{
                          debugPrint("not login");
                        }}
-                      }, child: Text("Login "),style: ElevatedButton.styleFrom(primary: Colors.blueAccent,minimumSize: Size(40, 60),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
+                      }, child: const Text("Login ",style: TextStyle(color: Colors.white),),style: ElevatedButton.styleFrom(primary:Palette.color,minimumSize: const Size(40, 60),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
                         ,),
-                      SizedBox(width: 5,),
+                      const SizedBox(width: 5,),
                       ElevatedButton(onPressed: (){
 
 
-                      }, child: Icon(Icons.fingerprint_sharp,size: 40,),style: ElevatedButton.styleFrom(primary: Colors.blueAccent,minimumSize: Size(40, 60),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
+                      }, child: const Icon(Icons.fingerprint_sharp,size: 40,color: Colors.white,),style: ElevatedButton.styleFrom(primary: Palette.color,minimumSize: const Size(40, 60),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
                     ],
                   ),
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 50,),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
+                    children: const [
                       Text(
                         "or continue with",
-                        style: TextStyle(fontWeight: FontWeight.w300,letterSpacing: 0.8),
+                        style: TextStyle(fontWeight: FontWeight.w300,letterSpacing: 0.8,color: Colors.white),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20,),
+                  const SizedBox(height: 10,),
                   Row(
                     children: [
-                      Expanded(child:
-                      ElevatedButton(onPressed: (){}, child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.g_mobiledata),
-                          SizedBox(width: 5,),
-                          Text("Google"),
-                        ],
-                      ),style: ElevatedButton.styleFrom(primary: Colors.deepOrangeAccent,minimumSize: Size(20, 45),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
-                        ,),
-                      SizedBox(width: 5,),
                       Expanded(child:
                       ElevatedButton(onPressed: (){
 
 
+
+                      //  DialogServices.dialogPop();
                       }, child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.facebook),
+                        children: const [
+                          Icon(Icons.g_mobiledata,color: Colors.white,),
                           SizedBox(width: 5,),
-                          Text("Facebook"),
+                          Text("Google",style: TextStyle(color: Colors.white),),
                         ],
-                      ),style: ElevatedButton.styleFrom(primary: Colors.blue,minimumSize: Size(20, 45),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
+                      ),style: ElevatedButton.styleFrom(primary:Palette.color,minimumSize: const Size(20, 45),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
+                        ,),
+                      const SizedBox(width: 5,),
+                      Expanded(child:
+                      ElevatedButton(onPressed: (){
+
+                      }, child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: const [
+                          Icon(Icons.facebook,color: Colors.black,),
+                          SizedBox(width: 5,),
+                          Text("Facebook",style: TextStyle(color: Colors.black),),
+                        ],
+                      ),style: ElevatedButton.styleFrom(primary: Colors.white,minimumSize: const Size(20, 45),shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),)
                         ,),
                     ],
                   ),
-                  SizedBox(height: 40,),
+                  const SizedBox(height: 30,),
                  Row(
                    mainAxisAlignment: MainAxisAlignment.center,
                    children: [
-                   Text("Don't Have an Account? "),
-                   Text("Sign Up",style: TextStyle(color: Colors.blueAccent,fontWeight: FontWeight.bold),),
+                    Text("Don't Have an Account? ",style:  TextStyle(color:Colors.white,fontWeight: FontWeight.bold),),
+                   InkWell(
+                       onTap: (){
+                         Navigator.push(context, MaterialPageRoute(builder: (_) => SignUpPage()));
+                       },
+                       child:  Text("Sign Up",
+                         style:  TextStyle( color: Palette.color,fontWeight: FontWeight.bold),)
+                   ),
                  ],),
-                  SizedBox(height: 30,),
+                  const SizedBox(height: 30,),
 
                 ],
               ),
